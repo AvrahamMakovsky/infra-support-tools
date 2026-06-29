@@ -7,5 +7,5 @@ Some of these are simple health checks. Others may affect the local machine, so 
 Planned tools:
 
 - `Show-RebuildReminder.ps1`
-- `Get-SsdHealth.ps1`
+- `Get-SSDHealth.ps1`
 - `reset-network-and-reboot.cmd`
