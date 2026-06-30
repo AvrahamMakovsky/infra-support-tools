@@ -3,13 +3,21 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 rem bulk-ping-launcher.cmd
 rem
-rem Small helper for opening continuous ping sessions for multiple hosts.
-rem Paste hostnames/IPs into Notepad, save, close it, and the script opens
-rem one ping session per host.
+rem Purpose:
+rem   Opens continuous ping sessions for multiple hosts from one pasted list.
+rem   Useful for quick connectivity checks during support or lab work.
 rem
-rem Delimiters: spaces, commas, or new lines.
-rem If Windows Terminal is available, it opens tabs. Otherwise, it opens
-rem separate CMD windows.
+rem Created by:
+rem   Avraham Makovsky
+rem
+rem License:
+rem   MIT
+rem
+rem Notes:
+rem   - Runs from the operator workstation.
+rem   - Accepts hostnames or IP addresses separated by lines, spaces, or commas.
+rem   - Uses Windows Terminal tabs when available.
+rem   - Falls back to separate CMD windows when Windows Terminal is unavailable.
 
 set "TEMP_FILE=%TEMP%\bulk_ping_hosts_%RANDOM%_%RANDOM%.txt"
 
@@ -36,6 +44,7 @@ for /f "usebackq delims=" %%A in ("%TEMP_FILE%") do (
 
 del "%TEMP_FILE%" >nul 2>&1
 
+rem Normalize comma-separated input into space-separated tokens.
 set "rawHosts=%rawHosts:,= %"
 set /a count=0
 
@@ -53,6 +62,7 @@ if "%count%"=="0" (
 where wt.exe >nul 2>nul
 if errorlevel 1 goto UseCmdWindows
 
+rem Build one Windows Terminal command with a separate tab for each host.
 set "wtCommand=wt -w 0 new-tab --title Ping_1 cmd /k ping -t !host1!"
 
 for /L %%I in (2,1,%count%) do (
