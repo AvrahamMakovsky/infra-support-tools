@@ -14,65 +14,44 @@ Paste hostnames or IP addresses into Notepad, save and close it, and the script 
 
 ### bulk-vnc-launcher.cmd
 
-Opens multiple RealVNC Viewer sessions from a pasted host list.
+Opens multiple remote viewer sessions from a pasted host list.
 
-Update the `VNC_PATH` inside the script if RealVNC Viewer is installed in a different location.
+Update the viewer path inside the script if your remote viewer is installed in a different location.
+
+### hostname_extractor.py
+
+Extracts possible hostnames from copied text, logs, ticket titles, or notes.
+
+Useful when copied operational text contains many hostnames and you need a clean host list without manually scanning every line.
+
+```bash
+python hostname_extractor.py notes.txt --prefix LAB-PC-
+```
+
+### spreadsheet_work_item_flow.py
+
+Turns spreadsheet rows into reviewed work-item proposals.
+
+The public version uses a mocked creation flow, so it can demonstrate the workflow without connecting to a real ticketing system.
+
+### Update-OfflineEndpointIdentity.ps1
+
+Updates an offline Windows installation identity in two places:
+
+- hostname-related values in the offline Windows `SYSTEM` registry hive
+- an optional small hostname file on the EFI System Partition
+
+This can be useful in lab or imaging workflows where a machine identity may need to survive rebuilds, PXE flows, or partition replacement.
+
+```powershell
+.\Update-OfflineEndpointIdentity.ps1 `
+    -ComputerName "LAB-PC-001" `
+    -WindowsRoot "E:\Windows" `
+    -EfiRoot "S:\"
+```
 
 ## Notes
 
 These are personal tools shared for free use.
 
 Examples use fake hostnames. Replace them with hosts you are authorized to access.
-
-# hostname_extractor.py
-
-Small utility for extracting possible hostnames from copied text, logs, ticket titles, or notes.
-
-I built this for cases where I had a lot of copied operational text and needed a clean host list without manually scanning every line.
-
-## What it does
-
-- Reads text from a file, stdin, or a temporary Notepad window on Windows.
-- Extracts possible hostnames.
-- Removes duplicates.
-- Prints a clean sorted list.
-- Can filter by a specific hostname prefix.
-- Can write results to a text file.
-
-## Usage
-
-Read from a file:
-
-```bash
-python hostname_extractor.py notes.txt
-```
-
-Paste through Notepad on Windows:
-
-```bash
-python hostname_extractor.py --notepad
-```
-
-Filter by prefix:
-
-```bash
-python hostname_extractor.py notes.txt --prefix LAB-PC-
-```
-
-Save to a file:
-
-```bash
-python hostname_extractor.py notes.txt --output hosts.txt
-```
-
-Use a custom regex:
-
-```bash
-python hostname_extractor.py notes.txt --regex "\bLAB-[A-Z]+-\d{3}\b"
-```
-
-## Notes
-
-This version is intentionally generic. It does not contain workplace-specific hostname prefixes or patterns.
-
-Examples use fake hostnames only.
