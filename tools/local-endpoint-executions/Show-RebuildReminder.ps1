@@ -25,6 +25,8 @@ param(
 
     [string]$ButtonText = "I understand",
 
+    [string]$NoteText = "Please confirm only after saving your work.",
+
     [switch]$NoTopMost
 )
 
@@ -33,74 +35,161 @@ Add-Type -AssemblyName System.Drawing
 
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
+# -----------------------------
+# Colors
+# -----------------------------
+$ColorBackground = [System.Drawing.Color]::FromArgb(18, 32, 54)
+$ColorAccent     = [System.Drawing.Color]::FromArgb(97, 233, 255)
+$ColorText       = [System.Drawing.Color]::White
+$ColorSoftText   = [System.Drawing.Color]::FromArgb(216, 232, 245)
+$ColorButtonText = [System.Drawing.Color]::FromArgb(18, 32, 54)
+
+# -----------------------------
+# Main form
+# -----------------------------
 $form = New-Object System.Windows.Forms.Form
 $form.Text = $Title
 $form.WindowState = [System.Windows.Forms.FormWindowState]::Maximized
 $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
 $form.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterScreen
-$form.BackColor = [System.Drawing.Color]::FromArgb(18, 32, 54)
-$form.ForeColor = [System.Drawing.Color]::White
+$form.BackColor = $ColorBackground
+$form.ForeColor = $ColorText
 $form.TopMost = -not $NoTopMost
 $form.KeyPreview = $true
+$form.AutoScaleMode = [System.Windows.Forms.AutoScaleMode]::Dpi
 
+# -----------------------------
+# Main layout
+# -----------------------------
 $container = New-Object System.Windows.Forms.TableLayoutPanel
 $container.Dock = [System.Windows.Forms.DockStyle]::Fill
 $container.ColumnCount = 1
-$container.RowCount = 4
-$container.Padding = New-Object System.Windows.Forms.Padding(50)
-$container.BackColor = $form.BackColor
+$container.RowCount = 5
+$container.Padding = New-Object System.Windows.Forms.Padding(60)
+$container.BackColor = $ColorBackground
 
-$container.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 20)))
-$container.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 25)))
-$container.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 35)))
-$container.RowStyles.Add((New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 20)))
+[void]$container.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 18))
+)
+[void]$container.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 25))
+)
+[void]$container.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 27))
+)
+[void]$container.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 20))
+)
+[void]$container.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 10))
+)
 
+# -----------------------------
+# Title
+# -----------------------------
 $titleLabel = New-Object System.Windows.Forms.Label
 $titleLabel.Text = $Title
 $titleLabel.Dock = [System.Windows.Forms.DockStyle]::Fill
 $titleLabel.TextAlign = [System.Drawing.ContentAlignment]::BottomCenter
 $titleLabel.Font = New-Object System.Drawing.Font("Segoe UI", 34, [System.Drawing.FontStyle]::Bold)
-$titleLabel.ForeColor = [System.Drawing.Color]::FromArgb(97, 233, 255)
+$titleLabel.ForeColor = $ColorAccent
+$titleLabel.BackColor = $ColorBackground
 
+# -----------------------------
+# Message
+# -----------------------------
 $messageLabel = New-Object System.Windows.Forms.Label
 $messageLabel.Text = $Message
 $messageLabel.Dock = [System.Windows.Forms.DockStyle]::Fill
 $messageLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
 $messageLabel.Font = New-Object System.Drawing.Font("Segoe UI", 24, [System.Drawing.FontStyle]::Regular)
-$messageLabel.ForeColor = [System.Drawing.Color]::White
+$messageLabel.ForeColor = $ColorText
+$messageLabel.BackColor = $ColorBackground
 $messageLabel.Padding = New-Object System.Windows.Forms.Padding(30)
 
+# -----------------------------
+# Note
+# -----------------------------
 $noteLabel = New-Object System.Windows.Forms.Label
-$noteLabel.Text = "Please confirm only after saving your work."
+$noteLabel.Text = $NoteText
 $noteLabel.Dock = [System.Windows.Forms.DockStyle]::Fill
 $noteLabel.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
 $noteLabel.Font = New-Object System.Drawing.Font("Segoe UI", 16, [System.Drawing.FontStyle]::Regular)
-$noteLabel.ForeColor = [System.Drawing.Color]::FromArgb(216, 232, 245)
+$noteLabel.ForeColor = $ColorSoftText
+$noteLabel.BackColor = $ColorBackground
 
-$buttonPanel = New-Object System.Windows.Forms.Panel
-$buttonPanel.Dock = [System.Windows.Forms.DockStyle]::Fill
+# -----------------------------
+# Button layout
+# This avoids manual Left/Top positioning.
+# -----------------------------
+$buttonLayout = New-Object System.Windows.Forms.TableLayoutPanel
+$buttonLayout.Dock = [System.Windows.Forms.DockStyle]::Fill
+$buttonLayout.BackColor = $ColorBackground
+$buttonLayout.ColumnCount = 3
+$buttonLayout.RowCount = 3
+
+[void]$buttonLayout.ColumnStyles.Add(
+    (New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 50))
+)
+[void]$buttonLayout.ColumnStyles.Add(
+    (New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Absolute, 320))
+)
+[void]$buttonLayout.ColumnStyles.Add(
+    (New-Object System.Windows.Forms.ColumnStyle([System.Windows.Forms.SizeType]::Percent, 50))
+)
+
+[void]$buttonLayout.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 50))
+)
+[void]$buttonLayout.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Absolute, 82))
+)
+[void]$buttonLayout.RowStyles.Add(
+    (New-Object System.Windows.Forms.RowStyle([System.Windows.Forms.SizeType]::Percent, 50))
+)
 
 $button = New-Object System.Windows.Forms.Button
 $button.Text = $ButtonText
-$button.Width = 260
-$button.Height = 70
+$button.Dock = [System.Windows.Forms.DockStyle]::Fill
 $button.Font = New-Object System.Drawing.Font("Segoe UI", 18, [System.Drawing.FontStyle]::Bold)
-$button.BackColor = [System.Drawing.Color]::FromArgb(97, 233, 255)
-$button.ForeColor = [System.Drawing.Color]::FromArgb(18, 32, 54)
+
+# Important:
+# Without this, Windows visual styles may ignore BackColor/ForeColor.
+$button.UseVisualStyleBackColor = $false
+
+$button.BackColor = $ColorAccent
+$button.ForeColor = $ColorButtonText
 $button.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-$button.FlatAppearance.BorderSize = 0
+$button.FlatAppearance.BorderSize = 2
+$button.FlatAppearance.BorderColor = [System.Drawing.Color]::White
+$button.FlatAppearance.MouseOverBackColor = [System.Drawing.Color]::FromArgb(140, 242, 255)
+$button.FlatAppearance.MouseDownBackColor = [System.Drawing.Color]::FromArgb(70, 210, 235)
+$button.Cursor = [System.Windows.Forms.Cursors]::Hand
+$button.Margin = New-Object System.Windows.Forms.Padding(0)
 
-$buttonPanel.Add($button)
+[void]$buttonLayout.Controls.Add($button, 1, 1)
 
-# Keep the confirmation button centered when screen size changes.
-$buttonPanel.Add_Resize({
-    $button.Left = [int](($buttonPanel.Width - $button.Width) / 2)
-    $button.Top = 10
-})
+# Optional footer hint
+$hintLabel = New-Object System.Windows.Forms.Label
+$hintLabel.Text = "Esc is disabled. Use the confirmation button to close this reminder."
+$hintLabel.Dock = [System.Windows.Forms.DockStyle]::Fill
+$hintLabel.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
+$hintLabel.Font = New-Object System.Drawing.Font("Segoe UI", 11, [System.Drawing.FontStyle]::Regular)
+$hintLabel.ForeColor = [System.Drawing.Color]::FromArgb(175, 195, 215)
+$hintLabel.BackColor = $ColorBackground
 
+# -----------------------------
+# Events
+# -----------------------------
 $button.Add_Click({
     $form.Tag = "confirmed"
+    $form.DialogResult = [System.Windows.Forms.DialogResult]::OK
     $form.Close()
+})
+
+$form.Add_Shown({
+    $form.Activate()
+    $button.Focus()
 })
 
 $form.Add_FormClosing({
@@ -111,6 +200,7 @@ $form.Add_FormClosing({
     }
 
     $answer = [System.Windows.Forms.MessageBox]::Show(
+        $form,
         "Close this reminder without confirming?",
         "Confirm close",
         [System.Windows.Forms.MessageBoxButtons]::YesNo,
@@ -130,11 +220,23 @@ $form.Add_KeyDown({
     }
 })
 
-$container.Controls.Add($titleLabel, 0, 0)
-$container.Controls.Add($messageLabel, 0, 1)
-$container.Controls.Add($noteLabel, 0, 2)
-$container.Controls.Add($buttonPanel, 0, 3)
+# -----------------------------
+# Compose UI
+# -----------------------------
+[void]$container.Controls.Add($titleLabel, 0, 0)
+[void]$container.Controls.Add($messageLabel, 0, 1)
+[void]$container.Controls.Add($noteLabel, 0, 2)
+[void]$container.Controls.Add($buttonLayout, 0, 3)
+[void]$container.Controls.Add($hintLabel, 0, 4)
 
-$form.Controls.Add($container)
+[void]$form.Controls.Add($container)
 
-[void]$form.ShowDialog()
+$result = $form.ShowDialog()
+
+if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
+    Write-Host "User confirmed the reminder."
+    exit 0
+}
+
+Write-Host "Reminder window was closed without confirmation."
+exit 2
