@@ -3,12 +3,20 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 rem bulk-vnc-launcher.cmd
 rem
-rem Small helper for opening multiple VNC sessions from a pasted host list.
-rem Paste hostnames/IPs into Notepad, save, close it, and the script launches
-rem one VNC Viewer session per host.
+rem Purpose:
+rem   Opens multiple RealVNC Viewer sessions from one pasted host list.
+rem   Useful when connecting to several authorized machines during support work.
 rem
-rem Delimiters: spaces, commas, or new lines.
-rem Update VNC_PATH below if RealVNC Viewer is installed elsewhere.
+rem Created by:
+rem   Avraham Makovsky
+rem
+rem License:
+rem   MIT
+rem
+rem Notes:
+rem   - Runs from the operator workstation.
+rem   - Accepts hostnames or IP addresses separated by lines, spaces, or commas.
+rem   - Update VNC_PATH below if RealVNC Viewer is installed elsewhere.
 
 set "VNC_PATH=C:\Program Files\RealVNC\VNC Viewer\vncviewer.exe"
 
@@ -46,6 +54,7 @@ for /f "usebackq delims=" %%A in ("%TEMP_FILE%") do (
 
 del "%TEMP_FILE%" >nul 2>&1
 
+rem Normalize comma-separated input into space-separated tokens.
 set "rawHosts=%rawHosts:,= %"
 set /a count=0
 
