@@ -1,0 +1,4 @@
+Host,Hive,RegistryPath,ValueName,ValueData,ValueType,Status,Details
+LAB-PC-001,HKLM,SOFTWARE\Vendor\Product,Version,1.2.3,REG_SZ,OK,
+LAB-PC-002,HKLM,SOFTWARE\Vendor\Product,Version,,,NotFound,The system cannot find the file specified
+TEST-HOST-03,HKLM,SOFTWARE\Vendor\Product,Version,,,AccessDenied,Access is denied
