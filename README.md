@@ -10,7 +10,8 @@ These started as personal utilities for day-to-day tasks I wanted to make faster
 tools/
 ├─ workstation-tools/
 ├─ remote-endpoint-executions/
-└─ local-endpoint-executions/
+├─ local-endpoint-executions/
+└─ automation-runners/
 ```
 
 ## Tool groups
@@ -33,7 +34,13 @@ Tools intended to run directly on the target machine.
 
 These are usually local maintenance helpers, health checks, or user-facing notifications.
 
-## Planned / included tools
+### automation-runners
+
+Tools for recurring local automation, scheduled script runs, dashboards, and run history.
+
+These are useful when a task is more than a one-shot script, but still should stay local/internal rather than becoming an internet-facing service.
+
+## Tools
 
 | Tool | Group | Purpose |
 |---|---|---|
@@ -41,10 +48,13 @@ These are usually local maintenance helpers, health checks, or user-facing notif
 | `bulk-vnc-launcher.cmd` | workstation-tools | Open multiple VNC sessions from a pasted host list. |
 | `hostname_extractor.py` | workstation-tools | Extract hostnames from copied text, logs, or ticket titles. |
 | `spreadsheet_work_item_flow.py` | workstation-tools | Turn spreadsheet rows into reviewed work-item proposals. |
+| `Update-OfflineEndpointIdentity.ps1` | workstation-tools | Update an offline Windows hostname identity in the registry and optional EFI file. |
 | `remote_pnp_device_search.py` | remote-endpoint-executions | Check present Plug and Play devices on remote Windows hosts. |
+| `remote_registry_value_reader.py` | remote-endpoint-executions | Read one registry value from multiple remote Windows hosts. |
 | `Show-RebuildReminder.ps1` | local-endpoint-executions | Show a clear fullscreen reminder before maintenance. |
-| `Get-SsdHealth.ps1` | local-endpoint-executions | Show local SSD health information using smartctl. |
+| `Get-SSDHealth.ps1` | local-endpoint-executions | Show local SSD health information using smartctl. |
 | `reset-network-and-reboot.cmd` | local-endpoint-executions | Reset local network state and reboot. Use carefully. |
+| `local_task_runner.py` | automation-runners | Local dashboard for recurring script runs and run history. |
 
 ## Notes
 
