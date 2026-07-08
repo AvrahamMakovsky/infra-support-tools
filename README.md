@@ -4,6 +4,12 @@ Small tools for infrastructure support, endpoint operations, and everyday troubl
 
 These started as personal utilities for day-to-day tasks I wanted to make faster, clearer, or easier to repeat. I cleaned them up and shared them publicly in case they are useful to others.
 
+## Related repository
+
+- [google-drive-ai-vault](https://github.com/AvrahamMakovsky/google-drive-ai-vault) - a ChatGPT + Google Drive workflow template for keeping project context, decisions, review loops, and reusable prompts organized across long-running work.
+
+This repository contains the practical tooling examples. The AI vault repository contains the broader workflow/context layer for managing projects like this with ChatGPT.
+
 ## Structure
 
 ```text
