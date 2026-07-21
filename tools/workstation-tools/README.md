@@ -50,6 +50,18 @@ This can be useful in lab or imaging workflows where a machine identity may need
     -EfiRoot "S:\"
 ```
 
+### legacy-webforms-client
+
+Provides a sanitized Python command-line client for automating authorized
+workflows in legacy ASP.NET Web Forms administration portals.
+
+It handles hidden form state, chained postbacks, Windows Integrated
+Authentication, and read-after-write verification for search, register,
+and delete operations.
+
+See [`legacy-webforms-client/README.md`](legacy-webforms-client/README.md)
+for setup, safety notes, and usage.
+
 ## Notes
 
 These are personal tools shared for free use.
