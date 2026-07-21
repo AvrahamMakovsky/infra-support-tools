@@ -1,0 +1,5 @@
+requests
+urllib3
+beautifulsoup4
+lxml
+requests-negotiate-sspi; platform_system == "Windows"

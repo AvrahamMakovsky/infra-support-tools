@@ -54,6 +54,7 @@ These are useful when a task is more than a one-shot script, but still should st
 | `Show-RebuildReminder.ps1` | local-endpoint-executions | Show a clear fullscreen reminder before maintenance. |
 | `Get-SSDHealth.ps1` | local-endpoint-executions | Show local SSD health information using smartctl. |
 | `reset-network-and-reboot.cmd` | local-endpoint-executions | Reset local network state and reboot. Use carefully. |
+| `legacy-webforms-client` | workstation-tools | Automate legacy ASP.NET Web Forms endpoint workflows with Windows SSO and read-after-write verification. |
 | `local_task_runner.py` | automation-runners | Local dashboard for recurring script runs and run history. |
 
 ## Notes
